@@ -34,9 +34,9 @@ let farewell = function () {
 // }
 
 // Update DB with order details.
-let fulfillOrder = async function (fi, fq, cu, pr) {
+let fulfillOrder = function (fi, fq, cu, pr) {
     let newQty = cu - fq;
-    await connection.query('UPDATE `products` SET ? WHERE item_id = ?',
+    connection.query('UPDATE `products` SET ? WHERE item_id = ?',
         [
             {
                 stock_quantity: newQty
