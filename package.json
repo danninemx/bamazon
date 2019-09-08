@@ -1,0 +1,22 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "bamazon",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danninemx/bamazon.git"
+  },
+  "author": "Danny Kim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danninemx/bamazon/issues"
+  },
+  "homepage": "https://github.com/danninemx/bamazon#readme",
+  "dependencies": {
+    "mysql": "^2.17.1"
+  }
+}
