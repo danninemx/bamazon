@@ -56,7 +56,6 @@ let fulfillOrder = function (fi, fq, cu, pr) {
         })
     // // End DB conenction.
     // connection.end();
-
 }
 
 // Call this to check stock quantity.
@@ -102,9 +101,6 @@ let takeOrder = function () {
                 checkStock(id, qty);
             } else {
                 console.log(`\n***** Quantity has to be a positive integer. *****\n`);
-                // pause();
-                // Restart.
-                // start();
                 farewell();
             }
         })
