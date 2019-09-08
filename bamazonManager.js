@@ -18,7 +18,6 @@ let farewell = function () {
     connection.end();
 }
 
-
 // Call this to list every available item: the item IDs, names, prices, and quantities.
 let viewProds = function () {
     connection.query('SELECT item_id, product_name, price, stock_quantity FROM `products`', function (err, res) {
@@ -40,6 +39,30 @@ let viewProds = function () {
         // }
     })
 }
+
+
+// list all items with an inventory count lower than five.
+let viewLow = function () {
+    connection.query('SELECT item_id, product_name, price, stock_quantity FROM `products` HAVING stock_quantity < 5', function (err, res) {
+        if (err) throw err;
+
+        console.log(`\n----- ${res.length} products found. -----\n`);
+        let count = 0;
+        for (ea of res) {
+            count++;
+            console.log(`${count})  ITEM ID: ${ea.item_id}  ||  ITEM NAME: ${ea.product_name}  ||  PRICE: $${ea.price}  ||  QUANTITY: ${ea.stock_quantity}`);
+        }
+        farewell();
+        // If current stock quantity is sufficient, fulfill order. Restart otherwise.
+        // if (curr > 0 && curr >= cq) {
+        //     fulfillOrder(ci, cq, curr, price)
+        // } else {
+        //     console.log(`\n\n----- INSUFFICIENT AVAILABILITY (currently ${curr} in stock) -----\n`);
+        //     takeOrder();
+        // }
+    })
+}
+
 
 // Call this to start manager interaction.
 let start = function () {
@@ -64,6 +87,7 @@ let start = function () {
                     break;
 
                 case 'View Low Inventory':
+                    viewLow();
                     break;
 
                 case 'Add to Inventory':
