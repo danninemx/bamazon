@@ -11,20 +11,47 @@ let connection = mysql.createConnection({
     database: "bamazon"
 })
 
-let checkStock = function (i) {
-    connection.query('SELECT item_id, stock_quantity FROM `products` WHERE item_id = ?', [i], function (err, res) {
-        if (err) throw err;
+// Update DB with order details.
+let fulfillOrder = function (fi, fq, cu) {
+    let newQty = parseInt(cu) - parseInt(fq);
+    connection.query('UPDATE `products` SET ? WHERE item_id = ?',
+        [
+            {
+                stock_quantity: newQty
+            },
+            fi
+        ],
+        function (err, res) {
 
-        console.log(`Received id of ${i}.\n`)
+            if (err) throw err;
+            console.log(res.affectedRows + " product updated!\n");
+            // console.log(res);
+        })
 
-        console.log(res[0].stock_quantity);
-    })
 
-    // End DB conenction
+    // End DB conenction.
     connection.end();
 }
 
+// Call this to check stock quantity.
+let checkStock = function (ci, cq) {
+    connection.query('SELECT item_id, stock_quantity FROM `products` WHERE item_id = ?', [ci], function (err, res) {
+        if (err) throw err;
+
+        // If current stock quantity is sufficient, fulfill order. Restart otherwise.
+        let curr = res[0].stock_quantity;
+        if (curr > 0 && curr >= cq) {
+            fulfillOrder(ci, cq, curr)
+        } else {
+            console.log(`\n*** Insufficient quantity! ***\n`);
+            takeOrder();
+        }
+    })
+}
+
+// Call this to let user place order.
 let takeOrder = function () {
+    console.log(`\n*** Placing order ***\n`);
     return inquirer
         .prompt([
             {
@@ -40,11 +67,7 @@ let takeOrder = function () {
         .then((order) => {
             let id = order.id;
             let qty = parseInt(order.quantity);
-
-            // console.log(`ITEM ID = ${id}
-            // QUANTITY = ${qty}`);
-
-            checkStock(id);
+            checkStock(id, qty);
         })
 }
 
