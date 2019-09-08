@@ -11,24 +11,40 @@ let connection = mysql.createConnection({
     database: "bamazon"
 })
 
+let checkStock = function (i) {
+    connection.query('SELECT item_id, stock_quantity FROM `products` WHERE item_id = ?', [i], function (err, res) {
+        if (err) throw err;
+
+        console.log(`Received id of ${i}.\n`)
+
+        console.log(res[0].stock_quantity);
+    })
+
+    // End DB conenction
+    connection.end();
+}
+
 let takeOrder = function () {
-    inquirer.prompt([
-        {
-            type: 'input',
-            message: 'Please enter the ITEM ID of the item you wish to purchase.',
-            name: 'id'
-        },
-        {
-            type: 'input',
-            message: 'How many units would you like to purchase?',
-            name: 'quantity'
-        }])
+    return inquirer
+        .prompt([
+            {
+                type: 'input',
+                message: 'Please enter the ITEM ID of the item you wish to purchase.',
+                name: 'id'
+            },
+            {
+                type: 'input',
+                message: 'How many units would you like to purchase?',
+                name: 'quantity'
+            }])
         .then((order) => {
-            let id = order.id.trim();
+            let id = order.id;
             let qty = parseInt(order.quantity);
 
-            console.log(`ITEM ID = ${id}
-            QUANTITY = ${qty}`);
+            // console.log(`ITEM ID = ${id}
+            // QUANTITY = ${qty}`);
+
+            checkStock(id);
         })
 }
 
@@ -50,6 +66,4 @@ connection.query('SELECT item_id, product_name, price FROM `products`', function
     // console.log(`\n*** End of query. ***\n`);
 
     takeOrder();
-
-    connection.end();
 });

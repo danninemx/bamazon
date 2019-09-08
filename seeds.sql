@@ -36,7 +36,7 @@ INSERT INTO products (item_id, product_name, department_name, price, stock_quant
 VALUES ('miph9s', "miPhone 9s", "Electronics", 350.00, 40);
 
 INSERT INTO products (item_id, product_name, department_name, price, stock_quantity)
-VALUES ('miphX', "miPhone X", "Electronics", 400.00, 50);
+VALUES ('miphx', "miPhone X", "Electronics", 400.00, 50);
 
 INSERT INTO products (item_id, product_name, department_name, price, stock_quantity)
 VALUES ('best_movie', "Office Space DVD", "Media", 30.00, 10);
