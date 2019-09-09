@@ -17,6 +17,12 @@ It can:
 node bamazonCustomer.js
 ```
 
+Simply enter the desired item and quantity to place your order!
+![CustomerScreenshot01](./images/CustomerSS01.png)
+
+In case of low availability, you will be able to adjust your order quantity.
+![CustomerScreenshot02](./images/CustomerSS02.png)
+
 2. Managers
 
 ```shell

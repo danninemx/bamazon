@@ -30,10 +30,9 @@ let counted = function (ci) {
         // console.log('printing res[0].cnt:', res[0].cnt);
         // return res[0].cnt;
         let count = res[0].cnt;
-        console.log('count, called from COUNTED, is ' + count + ' and is of type ' + typeof count);
-
-        if (count > 0) { return true } else { return false };
+        // console.log('count, called from COUNTED, is ' + count + ' and is of type ' + typeof count);
         // return count;
+        if (count > 0) { return true } else { return false };
     })
 }
 
@@ -184,8 +183,7 @@ let addProd = function () {
                 addProd();
             }
             else {
-                console.log('This should be safe to add.');
-
+                // console.log('This should be safe to add.');
                 connection.query('INSERT INTO products (item_id, product_name, department_name, price, stock_quantity) VALUES (?,?,?,?,?)', [id, newProd.prod, newProd.dept, pr, qty], function (err, res) {
                     if (err) throw err;
                     console.log(`\n----------------------------\n`);

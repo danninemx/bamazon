@@ -17,22 +17,6 @@ let farewell = function () {
     connection.end();
 }
 
-// // 
-// let pause = function () {
-//     return inquirer
-//         .prompt([
-//             {
-//                 type: 'confirm',
-//                 message: '***** PLEASE TRY AGAIN *****',
-//                 name: 'confirm'
-//             }])
-//         .then((con) => {
-//             if (!con.confirm) {
-//                 start();
-//             }
-//         })
-// }
-
 // Update DB with order details.
 let fulfillOrder = function (fi, fq, cu, pr) {
     let newQty = cu - fq;
