@@ -25,7 +25,7 @@ node bamazonCustomer.js
 
 3. A valid order will be processed, and your 'receipt' will be shown.
 
-In case there is insufficient stock, you will be able to adjust your quantity and make a different order.
+   In case there is insufficient stock, you will be able to adjust your quantity and make a different order.
 
 ![CustomerScreenshot02](./images/CustomerSS02.png)
 
