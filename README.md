@@ -11,16 +11,22 @@ It can:
 
 ## How to Use
 
-1. Customers
+### Customers
+
+1. Run
 
 ```shell
 node bamazonCustomer.js
 ```
 
-Simply enter the desired item and quantity to place your order!
+2. Enter the desired item and quantity to place your order.
+
 ![CustomerScreenshot01](./images/CustomerSS01.png)
 
-In case of low availability, you will be able to adjust your order quantity.
+3. A valid order will be processed, and your 'receipt' will be shown.
+
+In case there is insufficient stock, you will be able to adjust your quantity and make a different order.
+
 ![CustomerScreenshot02](./images/CustomerSS02.png)
 
 2. Managers
