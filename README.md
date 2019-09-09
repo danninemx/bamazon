@@ -11,37 +11,19 @@ It can:
 
 ## How to Use
 
-1. Step 1 (to be added)
+1. Customers
 
-2. Step 2
+```shell
+node bamazonCustomer.js
+```
+
+2. Managers
+
+```shell
+node bamazonManager.js
+```
 
 (3. and so on...)
-
-### Challenge #2: Manager View (Next Level)
-
-- Create a new Node application called `bamazonManager.js`. Running this application will:
-
-  - List a set of menu options:
-
-    - View Products for Sale
-
-    - View Low Inventory
-
-    - Add to Inventory
-
-    - Add New Product
-
-  - If a manager selects `View Products for Sale`, the app should list every available item: the item IDs, names, prices, and quantities.
-
-  - If a manager selects `View Low Inventory`, then it should list all items with an inventory count lower than five.
-
-  - If a manager selects `Add to Inventory`, your app should display a prompt that will let the manager "add more" of any item currently in the store.
-
-  - If a manager selects `Add New Product`, it should allow the manager to add a completely new product to the store.
-
----
-
-- If you finished Challenge #2 and put in all the hours you were willing to spend on this activity, then rest easy! Otherwise continue to the next and final challenge.
 
 ---
 
@@ -109,35 +91,3 @@ Add a `README.md` to your repository describing the project. Here are some resou
 ### Add To Your Portfolio
 
 After completing the homework please add the piece to your portfolio. Make sure to add a link to your updated portfolio in the comments section of your homework so the TAs can easily ensure you completed this step when they are grading the assignment. To receive an 'A' on any assignment, you must link to it from your portfolio.
-
----
-
-### One More Thing
-
-If you have any questions about this project or the material we have covered, please post them in the community channels in slack so that your fellow developers can help you! If you're still having trouble, you can come to office hours for assistance from your instructor and TAs.
-
-**Good Luck!**
-
----sample---
-
-### How to Use
-
-1. Enter destination city & date on landing page. (State is optional but can make your search more accurate.)
-
-2. Check out weather conditions by time of day, and browse through trails in the area.
-
-3. Click on a trail to learn more.
-
-(4. Don't forget to bring a towel! And a sunscreen.)
-
-### Components
-
-- Google Maps API (https://cloud.google.com/maps-platform/)
-- Open Weather API (https://rapidapi.com/community/api/open-weather-map)
-- Trail API (https://rapidapi.com/trailapi/api/trailapi)
-
-### Developers (alphabetical)
-
-- Danny Kim (github.com/danninemx)
-- Jose Hernandez (github.com/Unlovingmotherboard)
-- Joshua Munoz (github.com/Joshmunoz63)

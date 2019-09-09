@@ -16,12 +16,30 @@ let connection = mysql.createConnection({
 // Call this process.
 let farewell = function () {
     connection.end();
-    console.log(`\n----- CLOSING MANAGEMENT PORTAL -----\n\n\n`)
+    console.log(`\n----- CLOSING MANAGEMENT PORTAL -----\n\n\n`);
+}
+
+// Call this to check item_id overlap.
+let counted = function (ci) {
+    connection.query('SELECT COUNT(*) AS cnt FROM `products` WHERE item_id = ?', [ci], function (err, res) {
+        if (err) throw err;
+        // console.log('This is from counted: ' + res[0].cnt);
+        // return (res[0].cnt !== 0 ? true : false);
+        // console.log('printing res:', res);
+        // console.log('printing res[0]:', res[0]);
+        // console.log('printing res[0].cnt:', res[0].cnt);
+        // return res[0].cnt;
+        let count = res[0].cnt;
+        console.log('count, called from COUNTED, is ' + count + ' and is of type ' + typeof count);
+
+        if (count > 0) { return true } else { return false };
+        // return count;
+    })
 }
 
 // Call this to list every available item: the item IDs, names, prices, and quantities.
-let viewProds = async function () {
-    await connection.query('SELECT item_id, product_name, price, stock_quantity FROM `products`', function (err, res) {
+let viewProds = function () {
+    connection.query('SELECT item_id, product_name, price, stock_quantity FROM `products`', function (err, res) {
         if (err) throw err;
 
         console.log(`\n----- ${res.length} products are on listing. -----\n`);
@@ -40,7 +58,7 @@ let viewLow = function () {
     connection.query('SELECT item_id, product_name, price, stock_quantity FROM `products` HAVING stock_quantity < 5', function (err, res) {
         if (err) throw err;
 
-        console.log(`\n----- ${res.length} products have less than 5 units in stock. -----\n`);
+        console.log(`\n----- ${res.length} product(s) have less than 5 units in stock. -----\n`);
         let count = 0;
         for (ea of res) {
             count++;
@@ -72,7 +90,7 @@ let addInventory = async function (ai, cq, aq) {
 }
 
 // display a prompt that will let the manager "add more" of any item currently in the store.
-let addMore = function () {
+let addQty = function () {
     console.log(`\nAdding to inventory\n`);
     return inquirer
         .prompt([
@@ -104,27 +122,81 @@ let addMore = function () {
         })
 }
 
-// let fulfillOrder = function (fi, fq, cu, pr) {
-//     let newQty = cu - fq;
-//     connection.query('UPDATE `products` SET ? WHERE item_id = ?',
-//         [
-//             {
-//                 stock_quantity: newQty
-//             },
-//             fi
-//         ],
-//         function (err, res) {
-//             if (err) throw err;
+// Call this to add a new product.
+let addProd = function () {
+    return inquirer
+        .prompt([
+            {
+                type: 'input',
+                message: 'ITEM ID :',
+                name: 'id'
+            },
+            {
+                type: 'input',
+                message: 'PRODUCT NAME :',
+                name: 'prod'
+            },
+            {
+                type: 'input',
+                message: 'DEPARTMENT :',
+                name: 'dept'
+            },
+            {
+                type: 'input',
+                message: 'PRICE :',
+                name: 'pr'
+            },
+            {
+                type: 'input',
+                message: 'QUANTITY :',
+                name: 'qty'
+            }])
+        .then((newProd) => {
+            // Clean up input.
+            let id;
+            if (typeof newProd.id !== 'string') {
+                id = newProd.id.toString().trim();
+            } else {
+                id = newProd.id.trim();
+            }
+            let pr = parseFloat(parseFloat(newProd.pr).toFixed(2));
+            let qty = parseInt(newProd.qty);
 
-//             let total = pr * fq;
-//             console.log(`\n----------------------------\n`);
-//             console.log(`${res.affectedRows} product updated!\n`);
-//             console.log(`Your total is $${total}.\n`);
-//             console.log(`----------------------------\n`);
-//             // console.log(res);
-//             farewell();
-//         })
-// }
+            // Validate quanity.
+            if (typeof qty !== 'number' || qty <= 0) {
+                console.log(`\n***** Quantity has to be a positive integer. *****\n`);
+                addProd();
+            }
+            // Validate price.
+            else if (typeof pr !== 'number' || pr <= 0) {
+                console.log(`\n***** Price has to be a positive number. *****\n`);
+                addProd();
+            }
+            // Validate Product ID.
+            // else if (counted(id) !== 0) {
+            //     console.log('count, called from main func, is ' + counted(id) + ' and is of type ' + typeof counted(id));
+            //     console.log(`\n***** PRODUCT ID of ${id} is already in use. Please try another.*****\n`);
+            //     addProd();
+            // }
+            else if (counted(id)) {
+                console.log('count, called from main func, is ' + counted(id) + ' and is of type ' + typeof counted(id));
+                console.log(`\n***** PRODUCT ID of ${id} is already in use. Please try another.*****\n`);
+                addProd();
+            }
+            else {
+                console.log('This should be safe to add.');
+
+                connection.query('INSERT INTO products (item_id, product_name, department_name, price, stock_quantity) VALUES (?,?,?,?,?)', [id, newProd.prod, newProd.dept, pr, qty], function (err, res) {
+                    if (err) throw err;
+                    console.log(`\n----------------------------\n`);
+                    console.log(`${res.affectedRows} product updated as below:\n`);
+                    console.log(`ITEM ID: ${id}  ||  ITEM NAME: ${newProd.prod}  ||  DEPARTMENT: ${newProd.dept}  ||  PRICE: $${pr}  ||  QUANTITY: ${qty}`);
+                    console.log(`\n----------------------------\n`);
+                    farewell();
+                })
+            }
+        })
+}
 
 
 // Call this to start manager interaction.
@@ -154,25 +226,17 @@ let start = function () {
                     break;
 
                 case 'Add to Inventory':
-                    addMore();
+                    addQty();
                     break;
 
                 case 'Add New Product':
+                    addProd();
                     break;
 
                 default:
                     console.log('Easter egg!')
                     return;
             }
-            // Validate quanity.
-            // let id = order.id.toString().trim();
-            // let qty = parseInt(order.quantity);
-            // if (typeof qty === 'number' && qty > 0) {
-            //     checkStock(id, qty);
-            // } else {
-            //     console.log(`\n----- Quantity has to be a positive integer. -----\n`);
-            //     farewell();
-            // }
         })
 }
 
