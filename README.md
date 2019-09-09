@@ -19,23 +19,43 @@ It can:
 node bamazonCustomer.js
 ```
 
-2. Enter the desired item and quantity to place your order.
+2. You will be shown the 'catalog'.
+   Enter the desired item and quantity to place your order.
 
 ![CustomerScreenshot01](./images/CustomerSS01.png)
 
 3. A valid order will be processed, and your 'receipt' will be shown.
-
    In case there is insufficient stock, you will be able to adjust your quantity and make a different order.
 
 ![CustomerScreenshot02](./images/CustomerSS02.png)
 
-2. Managers
+### Managers
+
+1. Run
 
 ```shell
 node bamazonManager.js
 ```
 
-(3. and so on...)
+2. Manager view starts with a list of actions.
+
+![ManagerScreenshot01](./images/ManagerSS01.png)
+
+3. You may choose to view the full catalog, including the SKU-level stock counts.
+
+![ManagerScreenshot02](./images/ManagerSS02.png)
+
+4. You can check for low inventory...
+
+![ManagerScreenshot03](./images/ManagerSS03.png)
+
+5. ...and replenish it by ordering additional stock.
+
+![ManagerScreenshot04](./images/ManagerSS04.png)
+
+6. Finally, you could introduce new items to your loyal customers!
+
+![ManagerScreenshot05](./images/ManagerSS05.png)
 
 ---
 
