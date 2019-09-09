@@ -2,30 +2,29 @@
 
 ## Overview
 
-This command line application is an eCommerce storefront simulation, built with NodeJS and MySQL.
+This is a command line application that simulates operations of an eCommerce storefront, built with Node.js, Javascript and MySQL.
 
-It can:
+What you can do:
 
-- Take in orders from customers and deplete stock from the store's inventory
+- As customer, you can review the catalog and place an order.
+- As manager, you can take in orders, review inventory, restock items and introduce new products.
 - Track product sales across the store's departments and provide a summary of the highest-grossing departments in the store.
 
 ## How to Use
 
 ### Customers
 
-1. Run
+1. Run app
 
 ```shell
 node bamazonCustomer.js
 ```
 
-2. You will be shown the 'catalog'.
-   Enter the desired item and quantity to place your order.
+2. You will be shown the 'catalog'. Enter the desired item and quantity to place your order.
 
 ![CustomerScreenshot01](./images/CustomerSS01.png)
 
-3. A valid order will be processed, and your 'receipt' will be shown.
-   In case there is insufficient stock, you will be able to adjust your quantity and make a different order.
+3. A valid order will be processed, and your 'receipt' will be shown. (If there is insufficient stock, you will be able to adjust your quantity and make a different order.)
 
 ![CustomerScreenshot02](./images/CustomerSS02.png)
 
