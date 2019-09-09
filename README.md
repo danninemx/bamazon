@@ -56,6 +56,10 @@ node bamazonManager.js
 
 ![ManagerScreenshot05](./images/ManagerSS05.png)
 
+### Supervisors
+
+1. When a Customer makes a purchase, the revenue is added to the database.
+
 ---
 
 ### Challenge #3: Supervisor View (Final Level)

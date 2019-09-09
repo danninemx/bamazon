@@ -18,19 +18,21 @@ let farewell = function () {
 }
 
 // Update DB with order details.
-let fulfillOrder = function (fi, fq, cu, pr) {
+let fulfillOrder = function (fi, fq, cu, pr, sa) {
     let newQty = cu - fq;
+    let newSales = sa + (pr * fq);
     connection.query('UPDATE `products` SET ? WHERE item_id = ?',
         [
             {
-                stock_quantity: newQty
+                stock_quantity: newQty,
+                product_sales: newSales
             },
             fi
         ],
         function (err, res) {
             if (err) throw err;
 
-            let total = pr * fq;
+            let total = parseFloat(pr * fq).toFixed(2);
             console.log(`\n----------------------------\n`);
             console.log(`${res.affectedRows} product updated!\n`);
             console.log(`Your total is $${total}.\n`);
@@ -44,17 +46,16 @@ let fulfillOrder = function (fi, fq, cu, pr) {
 
 // Call this to check stock quantity.
 let checkStock = function (ci, cq) {
-    connection.query('SELECT item_id, price, stock_quantity FROM `products` WHERE item_id = ?', [ci], function (err, res) {
+    connection.query('SELECT item_id, price, stock_quantity, product_sales FROM `products` WHERE item_id = ?', [ci], function (err, res) {
         if (err) throw err;
 
-        // console.log(res);
         let price = res[0].price;
         let curr = res[0].stock_quantity;
-        // console.log(price, ' ', curr);
+        let sales = res[0].product_sales;
 
         // If current stock quantity is sufficient, fulfill order. Restart otherwise.
         if (curr > 0 && curr >= cq) {
-            fulfillOrder(ci, cq, curr, price)
+            fulfillOrder(ci, cq, curr, price, sales)
         } else {
             console.log(`\n\n***** INSUFFICIENT AVAILABILITY (currently ${curr} in stock) *****\n`);
             takeOrder();
