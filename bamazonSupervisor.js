@@ -1,7 +1,8 @@
 // Global variables
 const mysql = require("mysql");
 const inquirer = require('inquirer');
-const util = require('util');
+// const util = require('util');
+const Table = require('cli-table');
 let started = false;
 
 // DB connection
@@ -28,6 +29,38 @@ let counted = function (ci) {
     })
 }
 */
+
+// Use cli-table to render.
+let render = (data) => {
+    // Instantiate horizontal table.
+    let table = new Table({
+        chars: {
+            'top': '═', 'top-mid': '╤', 'top-left': '╔', 'top-right': '╗'
+            , 'bottom': '═', 'bottom-mid': '╧', 'bottom-left': '╚', 'bottom-right': '╝'
+            , 'left': '║', 'left-mid': '╟', 'mid': '─', 'mid-mid': '┼'
+            , 'right': '║', 'right-mid': '╢', 'middle': '│'
+        }
+    });
+
+    // Table header
+    table.push(['#', 'DEPARTMENT ID', 'DEPARTMENT NAME', 'OVERHEAD COST', 'PRODUCT SALES', 'TOTAL PROFIT']);
+
+    // Loop through data, pretti-fy, and push to table.
+    let count = 0;
+    for (ea of data) {
+        count++;
+        let prettyCost = parseFloat(-1 * ea.dept_cost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        let prettySales = parseFloat(ea.prod_sales).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        let prettyProfit = parseFloat(ea.tot_prof).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        table.push([count, ea.dept_id, ea.dept_name, prettyCost, prettySales, prettyProfit]);
+        // count === res.length ? farewell() : 0;
+    }
+
+    console.log(table.toString());
+
+    farewell();
+}
+
 // Call this to render a summarized table in their terminal/bash window.
 let viewSales = function () {
 
@@ -36,14 +69,10 @@ let viewSales = function () {
         if (err) throw err;
 
         console.log(`\n----- ${res.length} departments on listing. -----\n`);
-        console.log(`#)  department_id  ||  department_name  ||  over_head_costs  ||  product_sales  || total_profit`);
-        console.log(`-----------------------------------------------------------------------------------------------`);
-        let count = 0;
-        for (ea of res) {
-            count++;
-            console.log(`${count})  ${ea.dept_id}  ||  ${ea.dept_name}  ||  ${ea.dept_cost}  ||  ${ea.prod_sales}  || ${ea.tot_prif}`);
-            count === res.length ? farewell() : 0;
-        }
+        // console.log(`#)  department_id  ||  department_name  ||  over_head_costs  ||  product_sales  || total_profit`);
+        // console.log(`-----------------------------------------------------------------------------------------------`);
+
+        render(res);
     })
 }
 
@@ -117,46 +146,37 @@ let addQty = function () {
             }
         })
 }
-
+*/
 // Call this to add a new product.
-let addProd = function () {
+let createDept = () => {
+    console.log(`\n===== Please enter the details of the department to create. =====\n`)
     return inquirer
         .prompt([
             {
                 type: 'input',
-                message: 'ITEM ID :',
+                message: 'Department ID :',
                 name: 'id'
             },
             {
                 type: 'input',
-                message: 'PRODUCT NAME :',
-                name: 'prod'
+                message: 'Department Name :',
+                name: 'name'
             },
             {
                 type: 'input',
-                message: 'DEPARTMENT :',
-                name: 'dept'
-            },
-            {
-                type: 'input',
-                message: 'PRICE :',
-                name: 'pr'
-            },
-            {
-                type: 'input',
-                message: 'QUANTITY :',
-                name: 'qty'
+                message: 'Over Head Costs:',
+                name: 'cost'
             }])
-        .then((newProd) => {
+        .then((newDept) => {
             // Clean up input.
             let id;
-            if (typeof newProd.id !== 'string') {
-                id = newProd.id.toString().trim();
+            if (typeof newDept.id !== 'string') {
+                id = newDept.id.toString().trim();
             } else {
-                id = newProd.id.trim();
+                id = newDept.id.trim();
             }
-            let pr = parseFloat(parseFloat(newProd.pr).toFixed(2));
-            let qty = parseInt(newProd.qty);
+            let pr = parseFloat(parseFloat(newDept.cost).toFixed(2));
+            let qty = parseInt(newDept.qty);
 
             // Validate quanity.
             if (typeof qty !== 'number' || qty <= 0) {
@@ -181,18 +201,18 @@ let addProd = function () {
             }
             else {
                 // console.log('This should be safe to add.');
-                connection.query('INSERT INTO products (item_id, product_name, department_name, price, stock_quantity) VALUES (?,?,?,?,?)', [id, newProd.prod, newProd.dept, pr, qty], function (err, res) {
+                connection.query('INSERT INTO products (item_id, product_name, department_name, price, stock_quantity) VALUES (?,?,?,?,?)', [id, newDept.prod, newDept.dept, pr, qty], function (err, res) {
                     if (err) throw err;
                     console.log(`\n----------------------------\n`);
                     console.log(`${res.affectedRows} product updated as below:\n`);
-                    console.log(`ITEM ID: ${id}  ||  ITEM NAME: ${newProd.prod}  ||  DEPARTMENT: ${newProd.dept}  ||  PRICE: $${pr}  ||  QUANTITY: ${qty}`);
+                    console.log(`ITEM ID: ${id}  ||  ITEM NAME: ${newDept.prod}  ||  DEPARTMENT: ${newDept.dept}  ||  PRICE: $${pr}  ||  QUANTITY: ${qty}`);
                     console.log(`\n----------------------------\n`);
                     farewell();
                 })
             }
         })
 }
-*/
+
 
 // Call this to start manager interaction.
 let start = function () {
@@ -215,7 +235,7 @@ let start = function () {
                     break;
 
                 case 'Create New Department':
-                    // newDept();
+                    createDept();
                     break;
 
                 default:
