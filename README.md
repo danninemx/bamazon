@@ -86,6 +86,12 @@ node bamazonSupervisor.js
 
 Remember the following law of business:
 
-    >(Phase 1) Launch new business
+    (Phase 1) Launch new business
     (Phase 2) ???
     (Phase 3) ___PROFIT___!!!
+
+## Components
+
+- [Node.js](https://nodejs.org/en/)
+- [npm: mysql](https://www.npmjs.com/package/mysql)
+- [npm: cli-table](https://www.npmjs.com/package/cli-table)
