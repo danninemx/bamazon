@@ -149,7 +149,7 @@ let addQty = function () {
 */
 // Call this to add a new product.
 let createDept = () => {
-    console.log(`\n===== Please enter the details of the department to create. =====\n`)
+    console.log(`\n===== Please describe the new department. =====\n`)
     return inquirer
         .prompt([
             {
@@ -164,10 +164,11 @@ let createDept = () => {
             },
             {
                 type: 'input',
-                message: 'Over Head Costs:',
+                message: 'Overhead Costs :',
                 name: 'cost'
             }])
         .then((newDept) => {
+
             // Clean up input.
             let id;
             if (typeof newDept.id !== 'string') {
