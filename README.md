@@ -62,14 +62,14 @@ node bamazonManager.js
 
    There are eyes everywhere! Here are what those eyes can do:
 
-![SupervisorScreenshot01](./image/SupervisorSS01.png)
+![SupervisorScreenshot01](./images/SupervisorSS01.png)
 
 2. Supervisor can review product sales by department.
 
    Looks like Electronics department is doing well but Media dept needs to work on their _game_!
 
-![SupervisorScreenshot02](./image/SupervisorSS02.png)
+![SupervisorScreenshot02](./images/SupervisorSS02.png)
 
 3. Supervisor is also able to add a new department.
 
-![SupervisorScreenshot03](./image/SupervisorSS03.png)
+![SupervisorScreenshot03](./images/SupervisorSS03.png)
