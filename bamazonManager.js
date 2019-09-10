@@ -1,7 +1,6 @@
 // Global variables
 const mysql = require("mysql");
 const inquirer = require('inquirer');
-const util = require('util');
 let started = false;
 
 // DB connection
@@ -13,7 +12,7 @@ let connection = mysql.createConnection({
     database: "bamazon"
 })
 
-// Call this process.
+// Call this to end app.
 let farewell = function () {
     connection.end();
     console.log(`\n----- CLOSING MANAGEMENT PORTAL -----\n\n\n`);
@@ -23,15 +22,8 @@ let farewell = function () {
 let counted = function (ci) {
     connection.query('SELECT COUNT(*) AS cnt FROM `products` WHERE item_id = ?', [ci], function (err, res) {
         if (err) throw err;
-        // console.log('This is from counted: ' + res[0].cnt);
-        // return (res[0].cnt !== 0 ? true : false);
-        // console.log('printing res:', res);
-        // console.log('printing res[0]:', res[0]);
-        // console.log('printing res[0].cnt:', res[0].cnt);
-        // return res[0].cnt;
+
         let count = res[0].cnt;
-        // console.log('count, called from COUNTED, is ' + count + ' and is of type ' + typeof count);
-        // return count;
         if (count > 0) { return true } else { return false };
     })
 }
@@ -52,7 +44,7 @@ let viewProds = function () {
 }
 
 
-// list all items with an inventory count lower than five.
+// List all items with an inventory count lower than five.
 let viewLow = function () {
     connection.query('SELECT item_id, product_name, price, stock_quantity FROM `products` HAVING stock_quantity < 5', function (err, res) {
         if (err) throw err;
@@ -171,25 +163,20 @@ let addProd = function () {
                 console.log(`\n***** Price has to be a positive number. *****\n`);
                 addProd();
             }
-            // Validate Product ID.
-            // else if (counted(id) !== 0) {
-            //     console.log('count, called from main func, is ' + counted(id) + ' and is of type ' + typeof counted(id));
-            //     console.log(`\n***** PRODUCT ID of ${id} is already in use. Please try another.*****\n`);
-            //     addProd();
-            // }
             else if (counted(id)) {
                 console.log('count, called from main func, is ' + counted(id) + ' and is of type ' + typeof counted(id));
                 console.log(`\n***** PRODUCT ID of ${id} is already in use. Please try another.*****\n`);
                 addProd();
             }
             else {
-                // console.log('This should be safe to add.');
-                connection.query('INSERT INTO products (item_id, product_name, department_name, price, stock_quantity) VALUES (?,?,?,?,?)', [id, newProd.prod, newProd.dept, pr, qty], function (err, res) {
+                connection.query('INSERT INTO products (item_id, product_name, department_name, price, stock_quantity, product_sales) VALUES (?, ?, ?, ?, ?, 0)', [id, newProd.prod, newProd.dept, pr, qty], function (err, res) {
                     if (err) throw err;
                     console.log(`\n----------------------------\n`);
                     console.log(`${res.affectedRows} product updated as below:\n`);
-                    console.log(`ITEM ID: ${id}  ||  ITEM NAME: ${newProd.prod}  ||  DEPARTMENT: ${newProd.dept}  ||  PRICE: $${pr}  ||  QUANTITY: ${qty}`);
+                    console.log(`ITEM ID: ${id}  ||  ITEM NAME: ${newProd.prod}  ||  DEPARTMENT: ${newProd.dept}  ||  PRICE: $${pr}  ||  QUANTITY: ${qty}  || PRODUCT SALES: $0`);
                     console.log(`\n----------------------------\n`);
+
+                    // End app.
                     farewell();
                 })
             }
@@ -199,7 +186,6 @@ let addProd = function () {
 
 // Call this to start manager interaction.
 let start = function () {
-    // console.log(`\n----- Please select an action -----\n`);
     return inquirer
         .prompt([
             {
