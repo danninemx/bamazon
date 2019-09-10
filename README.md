@@ -73,3 +73,15 @@ node bamazonManager.js
 3. Supervisor is also able to add a new department.
 
 ![SupervisorScreenshot03](./images/SupervisorSS03.png)
+
+4. Department listing confirms successful creation of a new business line!
+
+![SupervisorScreenshot04](./images/SupervisorSS04.png)
+
+Remember the following law of business:
+
+    (Phase 1) Launch new business
+
+    (Phase 2) ???
+
+    (Phase 3) PROFIT!!!
