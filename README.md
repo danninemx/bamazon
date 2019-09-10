@@ -6,15 +6,15 @@ This is a command line application that simulates operations of an eCommerce sto
 
 What you can do:
 
-- As customer, you can review the catalog and place an order.
-- As manager, you can take in orders, review inventory, restock items and introduce new products.
-- Track product sales across the store's departments and provide a summary of the highest-grossing departments in the store.
+- As **customer**, review the catalog and place an order.
+- As **manager**, review inventory, restock items and introduce new products.
+- As **supervisor**, track product sales across the departments and create new departments.
 
 ## How to Use
 
 ### Customers
 
-1. Run app
+1. Run the customer app.
 
 ```shell
 node bamazonCustomer.js
@@ -30,7 +30,7 @@ node bamazonCustomer.js
 
 ### Managers
 
-1. Run
+1. Run the manager app.
 
 ```shell
 node bamazonManager.js
@@ -58,30 +58,34 @@ node bamazonManager.js
 
 ### Supervisors
 
-1. When a customer makes a purchase, the revenue is added to the database for the Supervisor to track.
+1. Run the supervisor app.
+
+```shell
+node bamazonSupervisor.js
+```
+
+2. When a customer makes a purchase, the revenue is added to the database for the Supervisor to track.
 
    There are eyes everywhere! Here are what those eyes can do:
 
 ![SupervisorScreenshot01](./images/SupervisorSS01.png)
 
-2. Supervisor can review product sales by department.
+3. Supervisor can review product sales by department.
 
-   Looks like Electronics department is doing well but Media dept needs to work on their _game_!
+   Looks like the Electronics department is _electrified_ but the Media department needs to work on their _game_!
 
 ![SupervisorScreenshot02](./images/SupervisorSS02.png)
 
-3. Supervisor is also able to add a new department.
+4. Supervisor is also able to add a new department.
 
 ![SupervisorScreenshot03](./images/SupervisorSS03.png)
 
-4. Department listing confirms successful creation of a new business line!
+5. Department listing confirms successful creation of a new business line!
 
 ![SupervisorScreenshot04](./images/SupervisorSS04.png)
 
 Remember the following law of business:
 
-    (Phase 1) Launch new business
-
+    >(Phase 1) Launch new business
     (Phase 2) ???
-
-    (Phase 3) PROFIT!!!
+    (Phase 3) ___PROFIT___!!!
