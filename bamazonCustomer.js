@@ -1,6 +1,7 @@
 // Global variables
 const mysql = require("mysql");
 const inquirer = require('inquirer');
+const Table = require('cli-table');
 let started = false;
 
 // DB connection
@@ -15,6 +16,32 @@ let connection = mysql.createConnection({
 let farewell = function () {
     console.log(`\nTHANK YOU FOR CHOOSING BAMAZON.  PLEASE COME AGAIN!\n\n\n`)
     connection.end();
+}
+
+
+// Use cli-table to render.
+let render = (data) => {
+    // Instantiate horizontal table.
+    let table = new Table({
+        chars: {
+            'top': '═', 'top-mid': '╤', 'top-left': '╔', 'top-right': '╗'
+            , 'bottom': '═', 'bottom-mid': '╧', 'bottom-left': '╚', 'bottom-right': '╝'
+            , 'left': '║', 'left-mid': '╟', 'mid': '─', 'mid-mid': '┼'
+            , 'right': '║', 'right-mid': '╢', 'middle': '│'
+        }
+    });
+
+    // Table header
+    table.push(['#', 'ITEM ID', 'ITEM NAME', 'PRICE($)']);
+
+    // Loop through data, pretti-fy, push to table and print.
+    let count = 0;
+    for (ea of data) {
+        count++;
+        let prettyPrice = parseFloat(ea.price).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        table.push([count, ea.item_id, ea.product_name, prettyPrice]);
+    }
+    console.log(table.toString());
 }
 
 // Update DB with order details.
@@ -100,12 +127,7 @@ let start = function () {
         if (err) throw err;
         console.log(`***** ${res.length} matches found. *****\n`);
 
-        // Loop through the result and output each.
-        let count = 0;
-        for (ea of res) {
-            count++;
-            console.log(`${count}) ITEM ID: ${ea.item_id} || ITEM NAME: ${ea.product_name} || PRICE: $${ea.price}`);
-        }
+        render(res);
         takeOrder();
     })
 }

@@ -1,7 +1,6 @@
 // Global variables
 const mysql = require("mysql");
 const inquirer = require('inquirer');
-// const util = require('util');
 const Table = require('cli-table');
 let started = false;
 
@@ -42,7 +41,7 @@ let render = (data) => {
     });
 
     // Table header
-    table.push(['#', 'DEPARTMENT ID', 'DEPARTMENT NAME', 'OVERHEAD COST', 'PRODUCT SALES', 'TOTAL PROFIT']);
+    table.push(['#', 'DEPARTMENT ID', 'DEPARTMENT NAME', 'OVERHEAD COST($)', 'PRODUCT SALES($)', 'TOTAL PROFIT($)']);
 
     // Loop through data, pretti-fy, push to table and print.
     let count = 0;
