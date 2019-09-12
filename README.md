@@ -1,6 +1,6 @@
 # Bamazon
 
-### <a name="##components">Does</a> this send me to components?
+### <a name="##how-to-use"></a>go to how to use
 
 ## Overview
 
@@ -10,7 +10,7 @@ What you can do:
 
 - As <a href="###customers">**customer**</a>, review the catalog and place an order.
 - As <a name="###managers">**manager**</a>, review inventory, restock items and introduce new products.
-- As [link](###supervisors)**supervisor**, track product sales across the departments and create new departments.
+- As **supervisor**(###supervisors)**supervisor**, track product sales across the departments and create new departments.
 
 ## How to Use
 
