@@ -1,6 +1,6 @@
 # Bamazon
 
-### <a name="#components">Does this send me to components?</a>
+### <a name="##components">Does</a> this send me to components?
 
 ## Overview
 
@@ -9,8 +9,8 @@ This is a command line application that simulates operations of an eCommerce sto
 What you can do:
 
 - As <a href="###customers">**customer**</a>, review the catalog and place an order.
-- As **manager**, review inventory, restock items and introduce new products.
-- As **supervisor**, track product sales across the departments and create new departments.
+- As <a name="###managers">**manager**</a>, review inventory, restock items and introduce new products.
+- As [link](###supervisors)**supervisor**, track product sales across the departments and create new departments.
 
 ## How to Use
 
