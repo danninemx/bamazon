@@ -19,12 +19,13 @@ let farewell = function () {
     console.log(`\n===== CLOSING SUPERVISION PORTAL =====\n\n\n`);
 }
 
-// Call this to check department_id overlap.
+// Call this to check department_id overlap (when adding new department).
 let counted = function (ci) {
     connection.query('SELECT COUNT(*) AS cnt FROM `departments` WHERE department_id = ?', [ci], function (err, res) {
         if (err) throw err;
         let count = res[0].cnt;
-        if (count > 0) { return true } else { return false };
+        // if (count > 0) { return true } else { return false };
+        return count > 0 ? true : false;
     })
 }
 
