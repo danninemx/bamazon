@@ -12,7 +12,7 @@ What you can do:
 
 ## How to Use
 
-### <a name="customers"></a>Customers
+### Customers
 
 1. Run the customer app.
 
@@ -28,7 +28,7 @@ node bamazonCustomer.js
 
 ![CustomerScreenshot02](./images/CustomerSS02.png)
 
-### <a name="managers"></a>Managers
+### Managers
 
 1. Run the manager app.
 
