@@ -7,8 +7,8 @@ This is a command line application that simulates operations of an eCommerce sto
 What you can do:
 
 - As [**customer**](#customers), review the catalog and place an order.
-- As [**manager**](###managers), review inventory, restock items and introduce new products.
-- As [**supervisor**](###supervisors), track product sales across the departments and create new departments.
+- As [**manager**](#managers), review inventory, restock items and introduce new products.
+- As [**supervisor**](#supervisors), track product sales across the departments and create new departments.
 
 ## How to Use
 
@@ -28,7 +28,7 @@ node bamazonCustomer.js
 
 ![CustomerScreenshot02](./images/CustomerSS02.png)
 
-### Managers
+### <a name="managers"></a>Managers
 
 1. Run the manager app.
 
@@ -56,7 +56,7 @@ node bamazonManager.js
 
 ![ManagerScreenshot05](./images/ManagerSS05.png)
 
-### Supervisors
+### <a name="supervisors"></a>Supervisors
 
 1. Run the supervisor app.
 
@@ -84,7 +84,7 @@ node bamazonSupervisor.js
 
 ![SupervisorScreenshot04](./images/SupervisorSS04.png)
 
-Remember the following law of business:
+Just remember the following rule of business:
 
     (Phase 1) Launch new business
     (Phase 2) ???
