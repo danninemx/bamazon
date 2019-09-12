@@ -6,13 +6,13 @@ This is a command line application that simulates operations of an eCommerce sto
 
 What you can do:
 
-- As [**customer**](###customers), review the catalog and place an order.
+- As [**customer**](#customers), review the catalog and place an order.
 - As [**manager**](###managers), review inventory, restock items and introduce new products.
 - As [**supervisor**](###supervisors), track product sales across the departments and create new departments.
 
 ## How to Use
 
-### Customers
+### <a name="customers"></a>Customers
 
 1. Run the customer app.
 
