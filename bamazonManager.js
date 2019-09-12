@@ -32,14 +32,15 @@ let render = (data) => {
     });
 
     // Table header
-    table.push(['#', 'ITEM ID', 'ITEM NAME', 'PRICE($)']);
+    table.push(['#', 'ITEM ID', 'ITEM NAME', 'PRICE($)', 'QUANTITY']);
 
     // Loop through data, pretti-fy, push to table and print.
     let count = 0;
     for (ea of data) {
         count++;
         let prettyPrice = parseFloat(ea.price).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        table.push([count, ea.item_id, ea.product_name, prettyPrice]);
+        let prettyQty = parseFloat(ea.stock_quantity).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        table.push([count, ea.item_id, ea.product_name, prettyPrice, prettyQty]);
     }
     console.log(table.toString());
     count === data.length ? farewell() : 0;
@@ -96,7 +97,7 @@ let addInventory = async function (ai, cq, aq) {
 
             console.log(`\n----------------------------\n`);
             console.log(`${res.affectedRows} product updated!\n`);
-            console.log(`ITEM ID ${ai} now has stock count of ${newQty}.\n`);
+            console.log(`ITEM ID ${ai} now has stock count of ${newQty.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}.\n`);
             console.log(`----------------------------\n`);
             farewell();
         })
