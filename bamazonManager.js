@@ -1,6 +1,7 @@
 // Global variables
 const mysql = require("mysql");
 const inquirer = require('inquirer');
+const Table = require('cli-table');
 let started = false;
 
 // DB connection
@@ -16,6 +17,32 @@ let connection = mysql.createConnection({
 let farewell = function () {
     connection.end();
     console.log(`\n----- CLOSING MANAGEMENT PORTAL -----\n\n\n`);
+}
+
+// Use cli-table to render.
+let render = (data) => {
+    // Instantiate horizontal table.
+    let table = new Table({
+        chars: {
+            'top': '═', 'top-mid': '╤', 'top-left': '╔', 'top-right': '╗'
+            , 'bottom': '═', 'bottom-mid': '╧', 'bottom-left': '╚', 'bottom-right': '╝'
+            , 'left': '║', 'left-mid': '╟', 'mid': '─', 'mid-mid': '┼'
+            , 'right': '║', 'right-mid': '╢', 'middle': '│'
+        }
+    });
+
+    // Table header
+    table.push(['#', 'ITEM ID', 'ITEM NAME', 'PRICE($)']);
+
+    // Loop through data, pretti-fy, push to table and print.
+    let count = 0;
+    for (ea of data) {
+        count++;
+        let prettyPrice = parseFloat(ea.price).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        table.push([count, ea.item_id, ea.product_name, prettyPrice]);
+    }
+    console.log(table.toString());
+    count === data.length ? farewell() : 0;
 }
 
 // Call this to check item_id overlap.
@@ -34,12 +61,7 @@ let viewProds = function () {
         if (err) throw err;
 
         console.log(`\n----- ${res.length} products are on listing. -----\n`);
-        let count = 0;
-        for (ea of res) {
-            count++;
-            console.log(`${count})  ITEM ID: ${ea.item_id}  ||  ITEM NAME: ${ea.product_name}  ||  PRICE: $${ea.price}  ||  QUANTITY: ${ea.stock_quantity}`);
-            count === res.length ? farewell() : 0;
-        }
+        render(res);
     })
 }
 
@@ -171,8 +193,9 @@ let addProd = function () {
             else {
                 connection.query('INSERT INTO products (item_id, product_name, department_name, price, stock_quantity, product_sales) VALUES (?, ?, ?, ?, ?, 0)', [id, newProd.prod, newProd.dept, pr, qty], function (err, res) {
                     if (err) throw err;
+
                     console.log(`\n----------------------------\n`);
-                    console.log(`${res.affectedRows} product updated as below:\n`);
+                    console.log(`${res.affectedRows} product added as below:\n`);
                     console.log(`ITEM ID: ${id}  ||  ITEM NAME: ${newProd.prod}  ||  DEPARTMENT: ${newProd.dept}  ||  PRICE: $${pr}  ||  QUANTITY: ${qty}  || PRODUCT SALES: $0`);
                     console.log(`\n----------------------------\n`);
 
