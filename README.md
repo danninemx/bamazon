@@ -1,12 +1,14 @@
 # Bamazon
 
+### <a name="#components">Does this send me to components?</a>
+
 ## Overview
 
 This is a command line application that simulates operations of an eCommerce storefront, built with Node.js, Javascript and MySQL.
 
 What you can do:
 
-- As **customer**, review the catalog and place an order.
+- As <a href="###customers">**customer**</a>, review the catalog and place an order.
 - As **manager**, review inventory, restock items and introduce new products.
 - As **supervisor**, track product sales across the departments and create new departments.
 
