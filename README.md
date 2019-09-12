@@ -1,20 +1,18 @@
 # Bamazon
 
-### <a name="##how-to-use"></a>go to how to use
-
 ## Overview
 
 This is a command line application that simulates operations of an eCommerce storefront, built with Node.js, Javascript and MySQL.
 
 What you can do:
 
-- As <a href="###customers">**customer**</a>, review the catalog and place an order.
-- As <a name="###managers">**manager**</a>, review inventory, restock items and introduce new products.
-- As **supervisor**(###supervisors)**supervisor**, track product sales across the departments and create new departments.
+- As [**customer**](###customers), review the catalog and place an order.
+- As [**manager**](###managers), review inventory, restock items and introduce new products.
+- As [**supervisor**](###supervisors), track product sales across the departments and create new departments.
 
 ## How to Use
 
-### Customers
+### <a name="customers"></a>Customers
 
 1. Run the customer app.
 
@@ -30,7 +28,7 @@ node bamazonCustomer.js
 
 ![CustomerScreenshot02](./images/CustomerSS02.png)
 
-### Managers
+### <a name="managers"></a>Managers
 
 1. Run the manager app.
 
